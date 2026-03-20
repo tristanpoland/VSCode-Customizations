@@ -208,47 +208,29 @@
 
 /* ==========================================================
    CONTEXT MENUS  (.monaco-menu-container is the root)
+   backdrop-filter and position:relative both break submenu
+   positioning/layering, so we use background-image layering instead.
    ========================================================== */
 
-/* Blur is on ::before so the container itself doesn't create a
-   stacking/containing-block context that breaks submenu positioning */
 .monaco-menu-container {
-    background-color: transparent !important;
+    background-color: color-mix(in srgb, var(--vscode-menu-background) 35%, transparent) !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.07'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
+    background-size: 200px 200px !important;
+    backdrop-filter: blur(22px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.5) !important;
     border: 1px solid color-mix(in srgb, var(--vscode-menu-border, var(--vscode-widget-border, #fff)) 30%, transparent) !important;
     border-radius: 12px !important;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55) !important;
     padding: 4px !important;
 }
 
-/* Glass + noise layer behind content */
-.monaco-menu-container::before {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: -1 !important;
-    border-radius: inherit !important;
-    pointer-events: none !important;
-    background-color: color-mix(in srgb, var(--vscode-menu-background) 35%, transparent) !important;
-    backdrop-filter: blur(22px) saturate(1.5) !important;
-    -webkit-backdrop-filter: blur(22px) saturate(1.5) !important;
-}
-
-/* Noise overlay */
-.monaco-menu-container::after {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    pointer-events: none !important;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.07'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
-    background-size: 200px 200px !important;
-    z-index: 9999 !important;
-    border-radius: inherit !important;
-}
-
-/* Inner action bar transparent so glass layer shows through */
+/* Inner elements must be transparent so the container shows through */
 .monaco-menu-container .monaco-menu,
 .monaco-menu-container .monaco-action-bar,
-.monaco-menu-container .actions-container {
+.monaco-menu-container .actions-container,
+.monaco-menu-container .monaco-scrollable-element,
+.monaco-menu-container .monaco-list,
+.monaco-menu-container .monaco-list-rows {
     background: transparent !important;
     background-color: transparent !important;
 }
