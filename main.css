@@ -213,15 +213,36 @@
    ========================================================== */
 
 .monaco-menu-container {
-    background-color: color-mix(in srgb, var(--vscode-menu-background) 35%, transparent) !important;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.07'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
-    background-size: 200px 200px !important;
-    backdrop-filter: blur(22px) saturate(1.5) !important;
-    -webkit-backdrop-filter: blur(22px) saturate(1.5) !important;
+    background-color: transparent !important;
     border: 1px solid color-mix(in srgb, var(--vscode-menu-border, var(--vscode-widget-border, #fff)) 30%, transparent) !important;
     border-radius: 12px !important;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55) !important;
     padding: 4px !important;
+}
+
+/* Blur + base color behind all content */
+.monaco-menu-container::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: -1 !important;
+    border-radius: inherit !important;
+    pointer-events: none !important;
+    background-color: color-mix(in srgb, var(--vscode-menu-background) 35%, transparent) !important;
+    backdrop-filter: blur(22px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.5) !important;
+}
+
+/* Noise over the blur layer — ::after has no DOM children so no positioning side-effects */
+.monaco-menu-container::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    border-radius: inherit !important;
+    pointer-events: none !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.09'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
+    background-size: 200px 200px !important;
 }
 
 /* Inner elements must be transparent so the container shows through */
