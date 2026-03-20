@@ -1,0 +1,208 @@
+/* VS Code macOS-like hover + command palette — theme-aware, source-verified */
+
+/* ==========================================================
+   HOVER WIDGET
+   Outer shell: .monaco-editor .monaco-resizable-hover
+   Inner:       .monaco-editor .monaco-hover  (cleared)
+   ========================================================== */
+
+.monaco-editor .monaco-resizable-hover {
+    background-color: color-mix(in srgb, var(--vscode-editorHoverWidget-background) 22%, transparent) !important;
+    backdrop-filter: blur(20px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.4) !important;
+    border: 1px solid color-mix(in srgb, var(--vscode-editorHoverWidget-border) 60%, transparent) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+    overflow: hidden !important;
+}
+
+/* Noise overlay on outer hover shell */
+.monaco-editor .monaco-resizable-hover::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.07'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
+    background-size: 200px 200px !important;
+    z-index: 9999 !important;
+}
+
+/* Inner hover: clear to let outer show through */
+.monaco-editor .monaco-resizable-hover > .monaco-hover {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: inherit !important;
+    color: var(--vscode-editorHoverWidget-foreground) !important;
+}
+
+/* Standalone hover (no resizable wrapper) */
+.monaco-editor .monaco-hover {
+    background-color: color-mix(in srgb, var(--vscode-editorHoverWidget-background) 22%, transparent) !important;
+    backdrop-filter: blur(20px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(1.4) !important;
+    border: 1px solid color-mix(in srgb, var(--vscode-editorHoverWidget-border) 60%, transparent) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+    overflow: hidden !important;
+    color: var(--vscode-editorHoverWidget-foreground) !important;
+}
+
+/* ==========================================================
+   COMMAND PALETTE  (.quick-input-widget is the single root)
+   ========================================================== */
+
+.quick-input-widget {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: min(760px, 90vw) !important;
+    max-height: 70vh !important;
+    background-color: color-mix(in srgb, var(--vscode-quickInput-background) 70%, transparent) !important;
+    backdrop-filter: blur(22px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.5) !important;
+    border: 1px solid color-mix(in srgb, var(--vscode-contrastBorder, var(--vscode-widget-border, #fff)) 25%, transparent) !important;
+    box-shadow: 0 28px 56px rgba(0, 0, 0, 0.65) !important;
+    border-radius: 14px !important;
+    padding: 12px !important;
+    z-index: 1000000 !important;
+    overflow: hidden !important;
+    color: var(--vscode-quickInput-foreground) !important;
+}
+
+/* Noise overlay on command palette */
+.quick-input-widget::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.07'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
+    background-size: 200px 200px !important;
+    z-index: 0 !important;
+}
+
+.quick-input-widget .monaco-inputbox,
+.quick-input-widget .monaco-inputbox input {
+    background-color: color-mix(in srgb, var(--vscode-input-background) 85%, transparent) !important;
+    color: var(--vscode-input-foreground) !important;
+    border: 1px solid color-mix(in srgb, var(--vscode-input-border, var(--vscode-widget-border, #888)) 60%, transparent) !important;
+    border-radius: 10px !important;
+}
+
+.quick-input-title {
+    color: var(--vscode-quickInput-foreground) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* All inner palette children transparent so blurred root shows through */
+.quick-input-widget .quick-input-header,
+.quick-input-widget .quick-input-titlebar,
+.quick-input-widget .quick-input-list,
+.quick-input-widget .quick-input-box,
+.quick-input-widget .monaco-list,
+.quick-input-widget .monaco-scrollable-element,
+.quick-input-widget .monaco-list-rows,
+.quick-input-widget .monaco-scrollable-element > .scrollable-element {
+    background: transparent !important;
+    background-color: transparent !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.quick-input-list .monaco-list-row {
+    background: transparent !important;
+    color: var(--vscode-quickInput-foreground) !important;
+    border-radius: 7px !important;
+}
+
+.quick-input-list .monaco-list-row.focused,
+.quick-input-list .monaco-list-row.selected {
+    background-color: color-mix(in srgb, var(--vscode-quickInputList-focusBackground) 75%, transparent) !important;
+    color: var(--vscode-quickInputList-focusForeground) !important;
+}
+
+.quick-input-list .monaco-list-row:hover:not(.focused) {
+    background-color: color-mix(in srgb, var(--vscode-quickInputList-focusBackground) 40%, transparent) !important;
+}
+
+/* preserve native chrome & layout */
+.monaco-workbench .titlebar-right > *,
+.monaco-workbench .activitybar,
+.monaco-workbench .sidebar .title-actions {
+    display: inherit !important;
+}
+
+/* ==========================================================
+   NOTIFICATIONS  (.notification-toast / .notifications-center)
+   ========================================================== */
+
+/* Toast notifications */
+.notification-toast {
+    background-color: color-mix(in srgb, var(--vscode-notifications-background) 70%, transparent) !important;
+    backdrop-filter: blur(22px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.5) !important;
+    border: 1px solid color-mix(in srgb, var(--vscode-notificationToast-border, var(--vscode-notifications-border, #fff)) 30%, transparent) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55) !important;
+    overflow: hidden !important;
+    color: var(--vscode-notifications-foreground) !important;
+    position: relative !important;
+}
+
+/* Noise overlay on toasts */
+.notification-toast::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.07'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
+    background-size: 200px 200px !important;
+    z-index: 9999 !important;
+}
+
+/* Inner content transparent so the glass background shows through */
+.notification-toast .notification-list-item,
+.notification-toast .notification-list-item-toolbar-container {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Notification center panel */
+.notifications-center {
+    background-color: color-mix(in srgb, var(--vscode-notifications-background) 70%, transparent) !important;
+    backdrop-filter: blur(22px) saturate(1.5) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.5) !important;
+    border: 1px solid color-mix(in srgb, var(--vscode-notifications-border, #fff) 30%, transparent) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55) !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+/* Noise overlay on notification center */
+.notifications-center::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='linear' slope='0.07'/></feComponentTransfer></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
+    background-size: 200px 200px !important;
+    z-index: 9999 !important;
+}
+
+/* Notification center header */
+.notifications-center .notifications-list-header {
+    background-color: color-mix(in srgb, var(--vscode-notificationCenterHeader-background, var(--vscode-notifications-background)) 50%, transparent) !important;
+    color: var(--vscode-notificationCenterHeader-foreground, var(--vscode-notifications-foreground)) !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--vscode-notifications-border, #fff) 25%, transparent) !important;
+}
+
+/* Inner center content transparent */
+.notifications-center .notification-list-item,
+.notifications-center .notifications-list-container {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
